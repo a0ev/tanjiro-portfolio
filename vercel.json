@@ -11,12 +11,8 @@
   ],
   "routes": [
     {
-      "src": "/api/contact",
-      "dest": "server.js"
-    },
-    {
       "src": "/(.*)",
-      "dest": "public/$1"
+      "dest": "server.js"
     }
   ]
 }

@@ -14,10 +14,14 @@ app.use(limiter);
 app.use(cors());
 app.use(express.json());
 
-// خلي هادي للاحتياط
-app.use(express.static(path.join(__dirname, "public")));
+// استخدام process.cwd() كضمن أن Vercel يلقى مجلد public فالمجلد الرئيسي
+app.use(express.static(path.join(process.cwd(), "public")));
 
-// حيدنا app.get("/") حيت Vercel غيتكلف بيه ديريكت من المجلد public
+// السيرفر هو لي غادي يصيفط index.html فالمسار الرئيسي
+app.get("/", (req, res) => {
+    res.sendFile(path.join(process.cwd(), "public", "index.html"));
+});
+
 app.use("/api/contact", require("./routes/contact"));
 
 const PORT = process.env.PORT || 3000;
