@@ -14,14 +14,10 @@ app.use(limiter);
 app.use(cors());
 app.use(express.json());
 
-// 1. تصحيح اسم المجلد لـ "public" بحرف صغير (lowercase)
+// خلي هادي للاحتياط
 app.use(express.static(path.join(__dirname, "public")));
 
-// 2. تعديل هاد المسار باش يصيفط ملف index.html عوض "Server Works!"
-app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "public", "index.html"));
-});
-
+// حيدنا app.get("/") حيت Vercel غيتكلف بيه ديريكت من المجلد public
 app.use("/api/contact", require("./routes/contact"));
 
 const PORT = process.env.PORT || 3000;
