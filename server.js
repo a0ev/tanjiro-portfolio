@@ -2,7 +2,6 @@ require("dotenv").config();
 
 const express = require("express");
 const cors = require("cors");
-const path = require("path");
 
 const { helmet, limiter } = require("./middleware/security");
 
@@ -14,15 +13,13 @@ app.use(limiter);
 app.use(cors());
 app.use(express.json());
 
-// استخدام process.cwd() كضمن أن Vercel يلقى مجلد public فالمجلد الرئيسي
-app.use(express.static(path.join(process.cwd(), "public")));
-
-// السيرفر هو لي غادي يصيفط index.html فالمسار الرئيسي
-app.get("/", (req, res) => {
-    res.sendFile(path.join(process.cwd(), "public", "index.html"));
-});
-
+// الـ API ديالك
 app.use("/api/contact", require("./routes/contact"));
+
+// مسار احتياطي للـ API فقط
+app.get("/api", (req, res) => {
+    res.json({ message: "API is running successfully!" });
+});
 
 const PORT = process.env.PORT || 3000;
 
